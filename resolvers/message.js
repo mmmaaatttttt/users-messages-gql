@@ -10,9 +10,9 @@ module.exports = {
   },
 
   Mutation: {
-    createMessage: async (parent, { username, text }, { models }) => {
+    createMessage: async (parent, { username, body }, { models }) => {
       return await models.Message.create({
-        text,
+        body,
         username
       });
     },
