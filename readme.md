@@ -2,7 +2,9 @@
 
 Here is a short demo for a lightning talk on getting up and running with GraphQL. Most of the DB logic is from a former Rithm School exercise with users and messages
 
-## Getting started
+You can try it out at [https://www.users-messages-gql.herokuapp.com](https://www.users-messages-gql.herokuapp.com)
+b
+## Running your own local version
 
 1. fork/clone
 2. `npm install`
