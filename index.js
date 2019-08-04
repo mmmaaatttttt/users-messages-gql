@@ -9,6 +9,8 @@ const app = express();
 app.use(cors());
 
 const server = new ApolloServer({
+  introspection: true,
+  playground: true,
   typeDefs: schema,
   resolvers,
   context: () => ({
@@ -18,6 +20,6 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app, path: '/graphql' });
 
-server.listen({ port: process.env.PORT || 8000 }).then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
-});
+app.listen(process.env.PORT || 8000, function(){
+  console.log(`🚀 Server starting!`)
+})
