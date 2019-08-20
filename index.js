@@ -5,8 +5,13 @@ const resolvers = require("./resolvers")
 const schema = require("./schemas")
 const models = require("./models")
 
+const http = require("http");
+
+const PORT = process.env.PORT || 8000;
+
 const app = express();
 app.use(cors());
+
 
 const server = new ApolloServer({
   introspection: true,
@@ -18,8 +23,19 @@ const server = new ApolloServer({
   })
 });
 
-server.applyMiddleware({ app, path: '/graphql' });
+server.applyMiddleware({ app });
 
-app.listen(process.env.PORT || 8000, function(){
-  console.log(`🚀 Server starting!`)
-})
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
+
+
+httpServer.listen(PORT, () => {
+  console.log(
+    `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
+  );
+  console.log(
+    `🚀 Subscriptions ready at ws://localhost:${PORT}${
+      server.subscriptionsPath
+    }`
+  );
+});

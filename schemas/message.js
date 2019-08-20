@@ -16,4 +16,8 @@ module.exports = gql`
     createMessage(username: ID!, body: String!): Message!
     deleteMessage(id: ID!): Message!
   }
+
+  extend type Subscription {
+    messageAdded(username: ID!): Message
+  }
 `;

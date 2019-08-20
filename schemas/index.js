@@ -12,6 +12,9 @@ const linkSchema = gql`
     _: Boolean
   }
 
+  type Subscription {
+    _: Boolean
+  }
 `;
 
 module.exports =  [linkSchema, userSchema, messageSchema];

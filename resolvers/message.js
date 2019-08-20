@@ -1,3 +1,7 @@
+const { PubSub, withFilter } = require("graphql-subscriptions") 
+
+const pubsub = new PubSub();
+
 
 module.exports = {
   Query: {
@@ -11,14 +15,31 @@ module.exports = {
 
   Mutation: {
     createMessage: async (parent, { username, body }, { models }) => {
-      return await models.Message.create({
+      
+      const createdMessage = await models.Message.create({
         body,
         username
       });
+      
+      pubsub.publish("messageAdded", {
+        messageAdded: {
+          username,
+          body,
+          id: createdMessage.id
+        }
+      });
+
+      return createdMessage
     },
 
     deleteMessage: async (parent, { id }, { models }) => {
       return await models.Message.delete(id);
+    }
+  },
+
+  Subscription: {
+    messageAdded: {
+      subscribe: () => pubsub.asyncIterator(["messageAdded"]),
     }
   },
 
