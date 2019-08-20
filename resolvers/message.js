@@ -21,6 +21,7 @@ module.exports = {
         username
       });
       
+      // doing the publish here so that we have a newly created ID
       pubsub.publish("messageAdded", {
         messageAdded: {
           username,
@@ -28,7 +29,7 @@ module.exports = {
           id: createdMessage.id
         }
       });
-
+      
       return createdMessage
     },
 
